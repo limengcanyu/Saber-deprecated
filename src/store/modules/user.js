@@ -6,18 +6,29 @@ import webiste from '@/config/website';
 import { loginByUsername, getUserInfo, getMenu, getTopMenu, logout, refeshToken, getButtons } from '@/api/user';
 
 function addPath(ele, first) {
+    console.log('add path element: ' + JSON.stringify(ele) + ' first: ' + first);
+
     const menu = webiste.menu;
     const propsConfig = menu.props;
+
     const propsDefault = {
         label: propsConfig.label || 'name',
         path: propsConfig.path || 'path',
         icon: propsConfig.icon || 'icon',
         children: propsConfig.children || 'children',
     };
+
     const icon = ele[propsDefault.icon];
     ele[propsDefault.icon] = validatenull(icon) ? menu.iconDefault : icon;
+
     const isChild = ele[propsDefault.children] && ele[propsDefault.children].length !== 0;
-    if (!isChild) ele[propsDefault.children] = [];
+
+    // 没有 children
+    if (!isChild) {
+        ele[propsDefault.children] = [];
+    }
+
+    // 有 children 且是 第一个 且 path不是URL
     if (!isChild && first && !isURL(ele[propsDefault.path])) {
         ele[propsDefault.path] = ele[propsDefault.path] + '/index';
     } else {
@@ -26,6 +37,7 @@ function addPath(ele, first) {
         });
     }
 }
+
 const user = {
     state: {
         userInfo: getStore({ name: 'userInfo' }) || [],
@@ -142,6 +154,8 @@ const user = {
                     const data = res.data.data;
                     let menu = deepClone(data);
 
+                    console.log('user menu: ' + JSON.stringify(menu));
+
                     if (menu && menu.length > 0) {
                         menu.forEach(ele => {
                             addPath(ele, true);
@@ -176,18 +190,21 @@ const user = {
         },
         SET_PERMISSION: (state, permission) => {
             let result = [];
+
             function getCode(list) {
-                list.forEach(ele => {
-                    if (typeof ele === 'object') {
-                        const chiildren = ele.children;
-                        const code = ele.code;
-                        if (chiildren) {
-                            getCode(chiildren);
-                        } else {
-                            result.push(code);
+                if (list && list.length > 0) {
+                    list.forEach(ele => {
+                        if (typeof ele === 'object') {
+                            const chiildren = ele.children;
+                            const code = ele.code;
+                            if (chiildren) {
+                                getCode(chiildren);
+                            } else {
+                                result.push(code);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
             getCode(permission);
             state.permission = {};
