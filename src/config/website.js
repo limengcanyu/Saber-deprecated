@@ -13,8 +13,10 @@ export default {
     tokenTime: 6000,
     //http的status默认放行不才用统一处理的,
     statusWhiteList: [],
+
     //配置首页不可关闭
     isFirstPage: false,
+
     fistPage: {
         label: '首页',
         value: '/wel/index',
@@ -26,7 +28,8 @@ export default {
         group: [],
         close: false,
     },
-    //配置菜单的属性
+
+    // 配置菜单的属性
     menu: {
         iconDefault: 'iconfont icon-caidan',
         props: {

@@ -81,6 +81,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(() => {
     NProgress.done();
+
     let title = store.getters.tag.label;
     let i18n = store.getters.tag.meta.i18n;
     title = router.$avueRouter.generateTitle(title, i18n);

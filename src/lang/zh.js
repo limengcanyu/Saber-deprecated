@@ -62,7 +62,14 @@ export default {
         permission: '权限',
         error: '异常页面',
         test: '测试页面',
-        userAdmin: '用户管理'
+        userAdmin: '用户管理',
+        deptAdmin: '部门管理',
+        dictAdmin: '字典管理',
+        menuAdmin: '菜单管理',
+        roleAdmin: '角色管理',
+        paramAdmin: '参数管理',
+        tenantAdmin: '租户管理',
+        clientAdmin: '应用管理',
     },
     login: {
         title: '登录 ',

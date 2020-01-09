@@ -59,6 +59,15 @@ export default [
                 },
                 component: () => import(/* webpackChunkName: "views" */ '@/views/system/user'),
             },
+            {
+                path: 'dept',
+                name: '部门管理',
+                meta: {
+                    i18n: 'deptAdmin',
+                },
+                component: () => import(/* webpackChunkName: "views" */ '@/views/system/dept'),
+            },
+
         ],
     },
 ];

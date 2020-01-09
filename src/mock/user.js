@@ -1,14 +1,18 @@
 import Mock from 'mockjs';
+
 export default ({ mock }) => {
     if (!mock) return;
+
     // 用户登录
     Mock.mock('/user/login', 'post', {
         data: new Date().getTime() + '',
     });
+
     //用户退出
     Mock.mock('/user/logout', 'get', {
         data: true,
     });
+
     //刷新token
     Mock.mock('/user/refesh', 'post', {
         data: new Date().getTime() + '',
@@ -46,7 +50,7 @@ export default ({ mock }) => {
     });
 
     Mock.mock('/api/blade-system/menu/routes', 'get', () => {
-        console.log('mock user menu');
+        console.log('mock user menu =========================================');
 
         let list = [];
 
@@ -56,12 +60,42 @@ export default ({ mock }) => {
                 path: '/system',
                 source: 'iconfont iconicon_setting',
                 children: [
-                    {
-                        name: '用户管理',
-                        path: '/system/user',
-                        source: 'iconfont iconicon_principal',
-                        children: [],
-                    },
+                    {name: '用户管理', path: '/system/user', source: 'iconfont iconicon_principal',},
+                    { name: '部门管理', path: '/system/dept', source: 'iconfont iconicon_group' },
+                    { name: '字典管理', path: '/system/dict', source: 'iconfont iconicon_addresslist' },
+                    { name: '菜单管理', path: '/system/menu', source: 'iconfont iconicon_subordinate' },
+                    { name: '角色管理', path: '/system/role', source: 'iconfont iconicon_boss' },
+                    { name: '参数管理', path: '/system/param', source: 'iconfont iconicon_community_line' },
+                    { name: '租户管理', path: '/system/tenant', source: 'iconfont icon-quanxian' },
+                    { name: '应用管理', path: '/system/client', source: 'iconfont iconicon_mobilephone' },
+                ],
+            })
+        );
+
+        return {
+            data: list,
+        };
+    });
+
+    Mock.mock('/api/blade-user/list', 'get', () => {
+        console.log('mock user get list =================================');
+
+        let list = [];
+
+        list.push(
+            Mock.mock({
+                name: '系统管理',
+                path: '/system',
+                source: 'iconfont iconicon_setting',
+                children: [
+                    { name: '用户管理', path: '/system/user', source: 'iconfont iconicon_principal' },
+                    { name: '部门管理', path: '/system/dept', source: 'iconfont iconicon_group' },
+                    { name: '字典管理', path: '/system/dict', source: 'iconfont iconicon_addresslist' },
+                    { name: '菜单管理', path: '/system/menu', source: 'iconfont iconicon_subordinate' },
+                    { name: '角色管理', path: '/system/role', source: 'iconfont iconicon_boss' },
+                    { name: '参数管理', path: '/system/param', source: 'iconfont iconicon_community_line' },
+                    { name: '租户管理', path: '/system/tenant', source: 'iconfont icon-quanxian' },
+                    { name: '应用管理', path: '/system/client', source: 'iconfont iconicon_mobilephone' },
                 ],
             })
         );

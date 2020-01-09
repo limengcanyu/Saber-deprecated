@@ -142,8 +142,10 @@ const user = {
         GetTopMenu() {
             return new Promise(resolve => {
                 getTopMenu().then(res => {
-                    const data = res.data.data || [];
-                    resolve(data);
+                    if (res.data) {
+                        const data = res.data.data || [];
+                        resolve(data);
+                    }
                 });
             });
         },
@@ -151,18 +153,20 @@ const user = {
         GetMenu({ commit, dispatch }, parentId) {
             return new Promise(resolve => {
                 getMenu(parentId).then(res => {
-                    const data = res.data.data;
-                    let menu = deepClone(data);
+                    if (res.data) {
+                        const data = res.data.data;
+                        let menu = deepClone(data);
 
-                    console.log('user menu: ' + JSON.stringify(menu));
+                        console.log('user menu: ' + JSON.stringify(menu));
 
-                    if (menu && menu.length > 0) {
-                        menu.forEach(ele => {
-                            addPath(ele, true);
-                        });
-                        commit('SET_MENU', menu);
-                        dispatch('GetButtons');
-                        resolve(menu);
+                        if (menu && menu.length > 0) {
+                            menu.forEach(ele => {
+                                addPath(ele, true);
+                            });
+                            commit('SET_MENU', menu);
+                            dispatch('GetButtons');
+                            resolve(menu);
+                        }
                     }
                 });
             });
